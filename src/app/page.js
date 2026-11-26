@@ -1,69 +1,43 @@
-import Image from "next/image";
+import Link from "next/link";
+import ScoutFrame from "../components/ScoutFrame";
+import RepositoryForm from "../components/repository/RepositoryForm";
 import styles from "./page.module.css";
 
-export default function Home() {
+export const metadata = { title: "GitScout · Open a repository" };
+
+const examples = [
+  { path: "facebook/react", name: "React", description: "A library for user interfaces" },
+  { path: "vercel/next.js", name: "Next.js", description: "The React framework for the web" },
+  { path: "vitejs/vite", name: "Vite", description: "Frontend tooling and builds" },
+];
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <ScoutFrame>
+      <section className={styles.hero}>
+        <div>
+          <h1>Find your next<br /><span className={styles.green}>contribution.</span></h1>
+          <p>Start by exploring a public GitHub repository.</p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className={styles.art} aria-hidden="true">
+          <div className={styles.stack}>
+            <i /><i /><i><b>&lt;/&gt;</b></i>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+      <RepositoryForm />
+      <section aria-labelledby="examples-title">
+        <h2 id="examples-title" className={styles.subheading}>Try an example</h2>
+        <div className={styles.examples}>
+          {examples.map(({ path, name, description }) => (
+            <Link key={path} href={`/explore/${path}`} prefetch={false} className={styles.example}>
+              <strong>{name} <span aria-hidden="true">→</span></strong>
+              <code>{path}</code>
+              <span>{description}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </ScoutFrame>
   );
 }

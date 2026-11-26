@@ -1,0 +1,48 @@
+.nav, .navLink { display: flex; align-items: center; }
+.nav { gap: clamp(10px, 3vw, 28px); }
+.navLink { gap: 6px; color: var(--ink); white-space: nowrap; }
+.navLink:hover, .navLink[aria-current="page"] { color: var(--green); }
+.badge { padding: 1px 6px; border: 1px solid var(--line); border-radius: 5px; color: var(--muted); font: .78rem/1.5 var(--mono); }
+.issueRow, .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; align-items: start; }
+.issueRow > :not(.action) { grid-column: 1; }
+.issueRow > .action { grid-column: 2; grid-row: 1 / span 3; }
+.action { display: grid; justify-items: start; gap: 5px; }
+.saveButton, .emptyLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 7px 15px;
+  border: 1px solid #57bd93;
+  border-radius: 7px;
+  color: var(--green);
+  background: transparent;
+  font: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.saveButton[data-saved="true"] { border-color: #8876a9; color: var(--purple); }
+.saveButton:hover, .emptyLink:hover { background: #77e8b412; }
+.saveButton:disabled { opacity: .6; cursor: default; }
+.error { max-width: 23ch; color: #f6b2ba; font-size: .85rem; }
+.intro h1 { color: var(--ink); font-size: clamp(2.2rem, 5vw, 3.7rem); letter-spacing: -.05em; line-height: 1.15; margin: 0; }
+.intro p, .empty p { margin: 8px 0 0; color: var(--muted); }
+.collection { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.listHead, .row, .empty, .message { padding: 18px clamp(16px, 3vw, 30px); }
+.listHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #162337; }
+.listHead h2, .empty h3 { font-size: 1.16rem; margin: 0; }
+.listHead span, .meta { color: var(--muted); font-size: .85rem; }
+.list { list-style: none; padding: 0; margin: 0; }
+.row { border-top: 1px solid var(--line); }
+.details { overflow-wrap: anywhere; }
+.details h3 { margin: 5px 0; font-size: 1.06rem; line-height: 1.45; }
+.details h3 a { color: var(--ink); }
+.details a:hover { text-decoration: underline; }
+.repo { font: .86rem var(--mono); color: var(--purple); }
+.meta, .message { margin: 0; }
+.emptyLink { margin-top: 14px; }
+@media (max-width: 560px) {
+  .nav { gap: 10px; font-size: .88rem; }
+  .issueRow, .row { grid-template-columns: minmax(0, 1fr); }
+  .issueRow > .action, .row > .action { grid-column: 1; grid-row: auto; margin-top: 10px; }
+}
