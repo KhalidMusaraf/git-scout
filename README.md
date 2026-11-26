@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitScout
 
-## Getting Started
+GitScout helps developers choose their next open-source contribution. Browse open issues in a public GitHub repository, narrow them down by label, and keep promising issues from different projects in one personal shortlist.
 
-First, run the development server:
+**[Try GitScout](https://trygitscout.vercel.app/)** · [Explore React issues](https://trygitscout.vercel.app/explore/facebook/react)
+
+## Features
+
+- **Open a repository.** Paste a GitHub URL or enter `owner/repo`, such as `facebook/react`. The repository overview shows its description, primary language, stars, forks, and default branch.
+- **Browse open issues.** View issue titles, labels, authors, and comment counts. Load more results as you go, or open an issue on GitHub to read the discussion. GitScout filters pull requests out of the issue list.
+- **Filter and sort.** Choose a repository label and sort by **Newest created** or **Recently updated**. The URL preserves your selection so you can share a filtered view.
+- **Save and remove issues.** Select **Save** beside an issue to bookmark it. Visit your shortlist to revisit or remove saved issues. Bookmarks stay in the same browser between visits using `localStorage`.
+
+## Tech stack
+
+React, Next.js App Router, JavaScript, and CSS Modules. GitScout fetches repository data from the GitHub REST API and runs on Vercel.
+
+## Run locally
+
+Use Node.js 22 LTS and npm.
 
 ```bash
+git clone https://github.com/KhalidMusaraf/git-scout.git
+cd git-scout
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost:3000](http://localhost:3000) and enter a public repository. You can run the app without a GitHub account, API key, or database.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+| Command         | Purpose                                           |
+| --------------- | ------------------------------------------------- |
+| `npm run dev`   | Start the local development server                |
+| `npm run lint`  | Check the source with ESLint                      |
+| `npm run build` | Create a production build                         |
+| `npm start`     | Serve the production build locally after building |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it works
 
-## Learn More
+The Next.js server requests repository details, labels, and open issues from GitHub. It follows GitHub’s pagination links when loading additional results. If GitHub’s unauthenticated request limit is reached, GitScout displays a message so the user knows to try again later.
 
-To learn more about Next.js, take a look at the following resources:
+React handles the filter controls and shortlist. Saving an issue writes its repository, title, issue number, and save date to the browser. Clearing the site’s browser data also clears the shortlist.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Directory                              | Responsibility                                                                        |
+| -------------------------------------- | ------------------------------------------------------------------------------------- |
+| [`src/app/`](./src/app/)               | Pages and API route handlers for the repository explorer and shortlist                |
+| [`src/components/`](./src/components/) | Repository form, issue list, filter controls, and shortlist UI                        |
+| [`src/lib/`](./src/lib/)               | Repository input parsing, GitHub API requests, issue pagination, and bookmark storage |
